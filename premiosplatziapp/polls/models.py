@@ -15,9 +15,12 @@ class Question(models.Model):
   def __str__(self):
     return self.question_text
   
+  #Error en los test
   def was_published_recently(self):
     """Si la pregunta fue publicada recientemente"""
-    return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+    return timezone.now() >= self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+  
+  
   
 class Choice(models.Model):
   """Class eleccion del modelo de la tabla choises"""

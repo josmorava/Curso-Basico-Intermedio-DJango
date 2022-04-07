@@ -1,32 +1,54 @@
-<form action="{% url 'polls:vote' question.id %}" method="post">
-{% csrf_token %}
-
-<fieldset>
-  <legend>
-    <h1>{{question.question_text}}</h1>
-  </legend>
-
-  {% if error_message %}
-    <p>{{ error_message }}</p>
-  {% endif %}
-
-  {% for choice in question.choice_set.all  %}
-    <input
-      type = "radio"
-      name="choice"
-      id="choice{{ forloop.counter }}"
-      value="{{ choice.id }}"
-    >
-    <label for="choice{{ forloop.counter }}">
-      {{  choice.choice_text }}
-    </label>
-    <br>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--links-->
+  <link rel="stylesheet" href="{% static 'polls/index.css' %}">
+  <link rel="stylesheet" href="{% static 'polls/detail.css' %}">
+  <!--title-->
+  <title>{{question.question_text}}</title>
+</head>
+<body>
+  <form action="{% url 'polls:vote' question.id %}" method="post">
+    {% csrf_token %}
     
-  {% endfor %}
-</fieldset>
-  <input type="submit" value="Votar">
-  <br>
-  <a href="{% url 'polls:index' %}">
-    Volver a las preguntas
-  </a>
-</form>
+    <fieldset>
+      <legend>
+        <h1>{{question.question_text}}</h1>
+      </legend>
+    
+      {% if error_message %}
+        <p class="error_message">{{ error_message }}</p>
+      {% endif %}
+    
+      {% for choice in question.choice_set.all  %}
+        <div clas="content">
+          <input
+            type = "radio"
+            name="choice"
+            id="choice{{ forloop.counter }}"
+            value="{{ choice.id }}"
+          >
+          <label for="choice{{ forloop.counter }}">
+            {{  choice.choice_text }}
+          </label>
+          <br>
+        </div>
+        
+      {% endfor %}
+    </fieldset>
+    <input type="submit" value="Votar">
+    <br>
+    <a href="{% url 'polls:index' %}">
+      Volver a las preguntas
+    </a>
+  </form>
+</body>
+</html>
+
+
+
+
